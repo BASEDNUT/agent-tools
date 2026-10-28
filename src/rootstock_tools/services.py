@@ -144,13 +144,22 @@ def wallet_balances(rpc,wallet:str,tokens:list[str]):
     head=parse_quantity(rpc.call('eth_blockNumber',[]));tag=hex(head)
     block=rpc.call('eth_getBlockByNumber',[tag,False]);bh=block.get('hash') if isinstance(block,dict) else None
     if not HEX32.fullmatch(str(bh)):raise ChainError('Missing account snapshot block hash')
-    assets=[]
+    assets=[]; failures=0
     for token in canonical:
-        raw=decode_word(_view(rpc,token,'balanceOf(address)',addr_word(wallet),block=tag))
-        assets.append({'token':token,'balance_raw':str(raw),'metadata':_metadata(rpc,token,tag)})
+        # One provider-broken token must not abort the whole explicit batch:
+        # degrade per-asset with an honest error label; never fabricate a zero.
+        try:
+            raw=decode_word(_view(rpc,token,'balanceOf(address)',addr_word(wallet),block=tag))
+            assets.append({'token':token,'balance_raw':str(raw),'metadata':_metadata(rpc,token,tag)})
+        except ChainError as exc:
+            failures+=1
+            assets.append({'token':token,'balance_raw':None,'metadata':_metadata(rpc,token,tag),
+                'read_error':'balanceOf unavailable from this provider: '+str(exc)[:120]})
     _verify_snapshot(rpc,head,bh)
     return {'chain_id':rpc.chain_id,'wallet':wallet,'assets':assets,
-       'observed_head_block':head,'observed_head_hash':bh,'state':'observed',
+       'observed_head_block':head,'observed_head_hash':bh,
+       'state':'observed_partial' if failures else 'observed',
+       'failed_reads':failures or None,
        'coverage':'user-enumerated assets only; not an exhaustive wallet balance',
        'source':'explicit ERC20.balanceOf and token metadata, same provider block'}
 
