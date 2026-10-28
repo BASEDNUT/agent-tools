@@ -1,0 +1,20 @@
+{
+  "observed_on": "2026-10-23",
+  "method": "GitHub connector read of repository files; file-level Git blob hashes only; this is not live chain attestation or full checkout",
+  "source_files": [
+    {"id":"rootstock-registry-base", "repository":"BASEDNUT/rootstock-monorepo", "path":"deployments/base.json", "blob_sha":"0348ff1e5ae37e25f43a337ff75cf9f2b8d2857a", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/deployments/base.json"},
+    {"id":"rootstock-registry-sepolia", "repository":"BASEDNUT/rootstock-monorepo", "path":"deployments/base-sepolia.json", "blob_sha":"7efb0c38bd29cfa6c92b6cd74ee0c867e81d05c3", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/deployments/base-sepolia.json"},
+    {"id":"rootstock-sdk-package", "repository":"BASEDNUT/rootstock-monorepo", "path":"packages/lib/package.json", "blob_sha":"6d05cea8805fd5b87e320e3a221e72dae6e59989", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/packages/lib/package.json"},
+    {"id":"rootstock-workspace", "repository":"BASEDNUT/rootstock-monorepo", "path":"pnpm-workspace.yaml", "blob_sha":"95077c8ebb8d95c683d2c053eef40c3114a34a7d", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/pnpm-workspace.yaml"},
+    {"id":"rootstock-sdk-patch", "repository":"BASEDNUT/rootstock-monorepo", "path":"patches/@balancer__sdk@6.2.0.patch", "blob_sha":"1e0bc67d5bed6b0830db9a4845714bd9eb3e371c", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/patches/%40balancer__sdk%406.2.0.patch"},
+    {"id":"rootstock-discovery", "repository":"BASEDNUT/rootstock-monorepo", "path":"packages/lib/modules/pool/onchain-pool-discovery.ts", "blob_sha":"5aebbc7ce2ac15fb28eab917135287f0c6d29be4", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/packages/lib/modules/pool/onchain-pool-discovery.ts"},
+    {"id":"rootstock-discovery-tests", "repository":"BASEDNUT/rootstock-monorepo", "path":"packages/lib/modules/pool/onchain-pool-discovery.spec.ts", "blob_sha":"77fd8de2bcf4f7db1c0c24b16736a4abf5b3a1bf", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/packages/lib/modules/pool/onchain-pool-discovery.spec.ts"},
+    {"id":"rootstock-provenance", "repository":"BASEDNUT/rootstock-monorepo", "path":"deployments/PROVENANCE.md", "blob_sha":"12ab9ae4d828edb82238edcc7558b5eb1a2394b5", "url":"https://github.com/BASEDNUT/rootstock-monorepo/blob/main/deployments/PROVENANCE.md"},
+    {"id":"balancer-sdk-package", "repository":"balancer/b-sdk", "path":"package.json", "blob_sha":"66bcdcd1b17905f3b6f9183a9a6d9dfbaacff6e0", "url":"https://github.com/balancer/b-sdk/blob/main/package.json"},
+    {"id":"balancer-swap", "repository":"balancer/b-sdk", "path":"src/entities/swap/index.ts", "blob_sha":"f7e5490be53f591fc329e2249bb956377bc39b81", "url":"https://github.com/balancer/b-sdk/blob/main/src/entities/swap/index.ts"},
+    {"id":"balancer-v3-swap", "repository":"balancer/b-sdk", "path":"src/entities/swap/swaps/v3/index.ts", "blob_sha":"f816d04ffc2ec72eee11873fccc0aafa64bc2710", "url":"https://github.com/balancer/b-sdk/blob/main/src/entities/swap/swaps/v3/index.ts"},
+    {"id":"balancer-address-provider", "repository":"balancer/b-sdk", "path":"src/entities/inputValidator/utils/addressProvider.ts", "blob_sha":"301e368c38f475ab77c2da128473ee871db5dbae", "url":"https://github.com/balancer/b-sdk/blob/main/src/entities/inputValidator/utils/addressProvider.ts"},
+    {"id":"balancer-address-map", "repository":"balancer/b-sdk", "path":"src/utils/balancerV3Contracts.ts", "blob_sha":"ef36b152367a9140e03b51803a64785a7238870e", "url":"https://github.com/balancer/b-sdk/blob/main/src/utils/balancerV3Contracts.ts"},
+    {"id":"balancer-changeset-skill", "repository":"balancer/b-sdk", "path":".agents/skills/changeset/SKILL.md", "blob_sha":"811099fb540d9db0173309a595f9a83c3b3c7cf9", "url":"https://github.com/balancer/b-sdk/blob/main/.agents/skills/changeset/SKILL.md"}
+  ]
+}

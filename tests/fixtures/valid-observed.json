@@ -1,0 +1,17 @@
+{
+  "chainId": 8453,
+  "vault": "0x1111111111111111111111111111111111111111",
+  "pool": "0x2222222222222222222222222222222222222222",
+  "metric": "tvl_usd",
+  "status": "observed",
+  "value": "123.45",
+  "unit": "USD",
+  "source": {
+    "sourceClass": "chain",
+    "chainId": 8453,
+    "blockNumber": 100,
+    "blockHash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "asOf": "2026-10-23T12:00:00-04:00",
+    "methodVersion": "fixture-v1"
+  }
+}

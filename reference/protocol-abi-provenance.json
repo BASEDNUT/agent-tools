@@ -1,0 +1,18 @@
+{
+  "verified_by": "read-only GitHub source inspection 2026-10-23",
+  "files": {
+    "balancer-v3-vault-events": {
+      "url": "https://github.com/balancer/b-sdk/blob/main/src/abi/v3/vault.ts",
+      "git_blob_sha": "4e6b44e11e30defdbe611467af56ad96ac769153"
+    },
+    "balancer-v3-router-query": {
+      "url": "https://github.com/balancer/b-sdk/blob/main/src/abi/v3/router.ts",
+      "git_blob_sha": "8e3dbc74f42f716056d2463aa3f0fa371627e572"
+    },
+    "balancer-v3-vault-extension": {
+      "url": "https://github.com/balancer/b-sdk/blob/main/src/abi/v3/vaultExtension.ts",
+      "git_blob_sha": "ad909deab174f1b2966a29c6eff1c2e942afda6a"
+    }
+  },
+  "verification_scope": "Source inspected; no full bytes bundled and no live ABI conformance proof"
+}

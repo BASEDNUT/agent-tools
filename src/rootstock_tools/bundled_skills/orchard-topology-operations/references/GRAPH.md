@@ -1,0 +1,1 @@
+Node key: `(chainId, tokenAddress)`. Edge key: `(chainId, poolAddress)`, with explicitly observed tokens. Pool order and token order are not necessarily architectural order. Rootstock pool math is not Orchard topology class. Any community-specific NUT root model must be loaded from canonical and separately verified configuration.

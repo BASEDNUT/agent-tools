@@ -1,0 +1,19 @@
+{
+  "as_of": "2026-10-23",
+  "classification": "source-level consistency observation, NOT runtime verification",
+  "method": "Parse all +address lines from pinned Rootstock pnpm SDK patch and join them against task/address pairs in both pinned Rootstock registry JSON files using GitHub-connected source reads",
+  "inputs": {
+    "patch_blob": "1e0bc67d5bed6b0830db9a4845714bd9eb3e371c",
+    "base_blob": "0348ff1e5ae37e25f43a337ff75cf9f2b8d2857a",
+    "base_sepolia_blob": "7efb0c38bd29cfa6c92b6cd74ee0c867e81d05c3"
+  },
+  "observed": {"changed_address_entries": 68, "matched_entries": 68, "mismatches": 0, "unique_chain_contract_pairs": 34, "bundles": ["dist/index.js", "dist/index.mjs"], "onchain_code_verified": false, "patch_application_verified": false},
+  "sample_pairs": [
+    {"contract":"Router","chain_id":8453,"address":"0xc8dcC030C81635Da8df2D7fb35573E661B01cDCe"},
+    {"contract":"Router","chain_id":84532,"address":"0xDD9793Cd4B79a8bd65D690C64A3074D023Dfa759"},
+    {"contract":"Vault","chain_id":8453,"address":"0x0a3af0Da0175afa0Cc05a6ad9092dC740155a0E7"},
+    {"contract":"Vault","chain_id":84532,"address":"0xEf348c4222ab9c08aFE768AD722Fb02b10d640c9"},
+    {"contract":"StablePoolFactory","chain_id":8453,"address":"0x74c9804b4659fEb7d056F150a810C4B5ae926DA1"},
+    {"contract":"StablePoolFactory","chain_id":84532,"address":"0x24Ab9fBA48E54b05c24a02122C4c40fD2018bA10"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "network":"baseSepolia", "chainId":84532, "contracts_total":67,
+  "tasks": {
+    "v3/tasks/20241204-v3-vault": {
+      "Vault":"0xEf348c4222ab9c08aFE768AD722Fb02b10d640c9"
+    },
+    "v3/tasks/20250321-v3-vault-factory-v2": {
+      "Vault":"0xEf348c4222ab9c08aFE768AD722Fb02b10d640c9"
+    },
+    "v3/tasks/20250307-v3-router-v2": {
+      "Router":"0xDD9793Cd4B79a8bd65D690C64A3074D023Dfa759"
+    },
+    "v3/tasks/20260115-v3-weighted-pool-v2": {
+      "WeightedPoolFactory":"0x277D7dDe3C6762C31CfB438c9331376fE8887A7c"
+    }
+  },
+  "_fixture_note":"SOURCE EXCERPT ONLY. Counts describe upstream full registry. NOT canonical, NOT verified onchain."
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "file": "valid-observed.json",
+    "valid": true
+  },
+  {
+    "file": "valid-unavailable.json",
+    "valid": true
+  },
+  {
+    "file": "valid-partial.json",
+    "valid": true
+  },
+  {
+    "file": "valid-synthetic.json",
+    "valid": true
+  },
+  {
+    "file": "invalid-missing-block-hash.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-cross-chain-provenance.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-zero-for-unavailable.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-synthetic-as-chain.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-partial-coverage.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-observed-null.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-observed-derived-source.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-observed-nonnumeric.json",
+    "valid": false
+  },
+  {
+    "file": "invalid-chain-outside-scope.json",
+    "valid": false
+  },
+  {
+    "file": "valid-derived.json",
+    "valid": true
+  },
+  {
+    "file": "invalid-partial-null.json",
+    "valid": false
+  }
+]

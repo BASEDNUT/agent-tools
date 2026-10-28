@@ -1,0 +1,630 @@
+{
+  "info": {
+    "title": "Rootstock Local Read-Only API",
+    "version": "0.7.1-beta"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/openapi.json": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OpenAPI 3.1 document"
+          }
+        },
+        "summary": "Machine-readable local API schema"
+      }
+    },
+    "/v1/analytics/{chain_id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Indexed raw-token swap volume and fees"
+      }
+    },
+    "/v1/assets/{chain_id}/{address}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Explicit token metadata"
+      }
+    },
+    "/v1/capabilities": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Read-only capabilities"
+      }
+    },
+    "/v1/contracts/{chain_id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Source-pinned contract inventory"
+      }
+    },
+    "/v1/deployments/{chain_id}/{name}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "task",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Resolve pinned deployment"
+      }
+    },
+    "/v1/graph/{chain_id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Observed Orchard token-pool hypergraph"
+      }
+    },
+    "/v1/history/{chain_id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Local history checkpoint status"
+      }
+    },
+    "/v1/networks": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Rootstock networks"
+      }
+    },
+    "/v1/pools/{chain_id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from_block",
+            "required": true,
+            "schema": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to_block",
+            "required": true,
+            "schema": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Bounded pool events"
+      }
+    },
+    "/v1/portfolio/{chain_id}/{wallet}/{token}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Explicit wallet token balance"
+      }
+    },
+    "/v1/rpc/{chain_id}/health": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "chain_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Provider chain/head check"
+      }
+    },
+    "/v1/skills": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Bundled skills"
+      }
+    },
+    "/v1/skills/{name}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "effect": {
+                      "const": "read"
+                    },
+                    "ok": {
+                      "type": "boolean"
+                    },
+                    "result": {}
+                  },
+                  "required": [
+                    "ok",
+                    "result"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Read-only JSON envelope"
+          },
+          "400": {
+            "description": "Validation or unavailable source error"
+          }
+        },
+        "summary": "Read bundled skill"
+      }
+    },
+    "/v1/tools/call": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "arguments": {
+                    "type": "object"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "arguments"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Read-only capability result"
+          },
+          "400": {
+            "description": "Invalid or denied capability"
+          }
+        },
+        "summary": "Invoke a shared read-only toolkit capability with typed JSON arguments"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "rootstock-orchard-cli-client",
+  "version": "0.7.1-beta.0",
+  "description": "Dependency-free TypeScript/JavaScript Node bridge to the standalone Rootstock CLI",
+  "type": "module",
+  "private": true,
+  "exports": {".": {"types": "./index.d.ts", "import": "./index.mjs"}},
+  "engines": {"node": ">=20"},
+  "scripts": {"test": "node --test index.test.mjs"}
+}

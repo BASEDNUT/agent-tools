@@ -1,0 +1,25 @@
+{
+  "model_version": "2026-10-23-case-0001",
+  "note": "Provenance-and-claim graph constructed from inspected GitHub files. Address assertions limited to specified versions; no chain verification.",
+  "source_ids": ["rootstock-registry-base","rootstock-registry-sepolia","rootstock-sdk-package","rootstock-workspace","rootstock-sdk-patch","rootstock-discovery","rootstock-discovery-tests","rootstock-provenance","balancer-sdk-package","balancer-swap","balancer-v3-swap","balancer-address-provider","balancer-address-map","balancer-changeset-skill"],
+  "address_observations": [
+    {"chain_id":8453, "contract":"Router", "address":"0x3f170631ed9821Ca51A59D996aB095162438DC10", "origin":"upstream-balancer-unpatched", "source":"balancer-address-map"},
+    {"chain_id":8453, "contract":"Router", "address":"0xc8dcC030C81635Da8df2D7fb35573E661B01cDCe", "origin":"rootstock-pnpm-patch", "source":"rootstock-sdk-patch"},
+    {"chain_id":8453, "contract":"Router", "address":"0xc8dcC030C81635Da8df2D7fb35573E661B01cDCe", "origin":"rootstock-registry", "source":"rootstock-registry-base"},
+    {"chain_id":84532, "contract":"Router", "address":"0xDD9793Cd4B79a8bd65D690C64A3074D023Dfa759", "origin":"rootstock-pnpm-patch", "source":"rootstock-sdk-patch"},
+    {"chain_id":84532, "contract":"Router", "address":"0xDD9793Cd4B79a8bd65D690C64A3074D023Dfa759", "origin":"rootstock-registry", "source":"rootstock-registry-sepolia"}
+  ],
+  "claims": [
+    {"id":"C01","text":"Installed dependency is pinned to SDK v6.2.0","status":"source-inspected","source_ids":["rootstock-sdk-package","rootstock-workspace"]},
+    {"id":"C02","text":"Unpatched SDK has Balancer router addresses","status":"source-inspected","source_ids":["balancer-address-provider","balancer-address-map","balancer-v3-swap"]},
+    {"id":"C03","text":"Rootstock patch overrides SDK router addresses in bundled dist","status":"source-inspected","source_ids":["rootstock-workspace","rootstock-sdk-patch"]},
+    {"id":"C04","text":"Rootstock live runtime uses patched addresses","status":"unverified-runtime","source_ids":["rootstock-sdk-patch"]},
+    {"id":"C05","text":"Registry name StablePoolFactory spans current and deprecated addresses","status":"source-inspected","source_ids":["rootstock-registry-base"]},
+    {"id":"C06","text":"PoolRegistered discovery includes direct deployments; missing metrics are null","status":"source-inspected","source_ids":["rootstock-discovery","rootstock-discovery-tests"]},
+    {"id":"C07","text":"CreateTime in one frontend mapping is based on block number","status":"source-inspected","source_ids":["rootstock-discovery"]},
+    {"id":"C08","text":"Deployed Rootstock bytecode has been independently rechecked in this session","status":"not-tested","source_ids":["rootstock-provenance"]}
+  ],
+  "revisions": [
+    {"earlier":"Unpatched Balancer registry might imply frontend swap misrouting", "new_evidence":"rootstock-sdk-patch", "revised":"Rootstock patched SDK address table; actual installed runtime awaits separate test; initial suspicion is not established"}
+  ]
+}

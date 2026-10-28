@@ -1,0 +1,74 @@
+{
+  "name": "rootstock-orchard-agent-tools",
+  "version": "0.7.1-beta",
+  "release_date": "2026-10-23",
+  "status": "offline_verified_development_beta_not_production_complete",
+  "source_baseline": "v0.7.0 audited archive; independent regression fixes applied in a separate v0.7.1 workspace",
+  "surfaces": [
+    "Python SDK",
+    "Node/TypeScript CLI bridge",
+    "JSON CLI",
+    "MCP stdio",
+    "loopback-only HTTP+OpenAPI",
+    "20 installable Agent Skills"
+  ],
+  "capabilities_exposed": 34,
+  "skills_bundled": 20,
+  "test_results": {
+    "python_unittest": 138,
+    "node_bridge": 5,
+    "security_fixtures": 66,
+    "observation_fixtures": 15,
+    "skill_structural": 20
+  },
+  "no_payment_features": true,
+  "wallet_signing": false,
+  "transaction_broadcast": false,
+  "live_base_rpc_tested": false,
+  "external_mcp_clients_tested": false,
+  "verified_source_patch_alignment": {
+    "existing_snapshot": true,
+    "retested_from_full_patch_in_this_release": false
+  },
+  "new_v07": [
+    "block_atomic_quote",
+    "provider_relative_receipt_confirmation",
+    "multi_erc20_balances",
+    "erc4626_rate_introspection",
+    "partial_abi_catalog",
+    "operator_price_tvl_arithmetic",
+    "operator_orchard_eligibility",
+    "provisional_rooted_graph",
+    "block_log_index_cursor"
+  ],
+  "remaining_prerequisites": [
+    "verified historical price series and complete indexing",
+    "canonical Orchard wallet/ELO configuration",
+    "independent authenticated runtime and chain signer",
+    "production deployment/auth and security audit",
+    "live chain and external client validation"
+  ],
+  "source_docs": [
+    "README.md",
+    "docs/CAPABILITY_COVERAGE.md",
+    "docs/CONFIGURATION.md",
+    "docs/SECURITY_BOUNDARIES.md",
+    "docs/VALIDATION.md"
+  ],
+  "independent_audit": {
+    "original_python_tests": 130,
+    "corrected_python_tests": 138,
+    "node_bridge": 5,
+    "new_regressions": 8,
+    "new_findings": [
+      "keccak_rate_boundary_padding",
+      "index_coverage_shrink_on_subrange_rescan",
+      "block_reorg_mid_pool_or_wallet_snapshot",
+      "receipt_hash_mismatch",
+      "receipt_status_outside_zero_or_one",
+      "unknown_mcp_tool_wrong_error_shape",
+      "asset_metadata_cross_block_reorg"
+    ],
+    "all_production_chain_validations_completed": false
+  }
+}

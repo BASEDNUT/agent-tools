@@ -1,0 +1,13 @@
+{
+  "chainId": 8453,
+  "vault": "0x1111111111111111111111111111111111111111",
+  "pool": "0x2222222222222222222222222222222222222222",
+  "metric": "tvl_usd",
+  "status": "synthetic",
+  "value": "50",
+  "unit": "USD",
+  "source": {
+    "sourceClass": "chain",
+    "chainId": 8453
+  }
+}

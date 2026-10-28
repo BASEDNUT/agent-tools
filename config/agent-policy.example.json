@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "agents": {
+    "research-reader": {"allow": ["registry.*", "rpc.get_health", "pools.list", "pools.inspect", "assets.*", "capabilities.list", "skills.list", "skills.read"], "chains": [8453, 84532]},
+    "index-observer": {"allow": ["history.*", "watch.poll", "observations.status", "analytics.*", "topology.explore", "capabilities.list"], "chains": [8453]}
+  }
+}

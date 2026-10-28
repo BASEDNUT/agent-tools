@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rootstock-orchard-agent-tools"
+version = "0.7.1b0"
+description = "Standalone read-only Rootstock/Orchard CLI, MCP server, Python SDK, and bundled agent skills"
+requires-python = ">=3.11"
+# License choice is pending project review; do not publish to package indexes.
+
+[project.scripts]
+rootstock = "rootstock_tools.__main__:main"
+rootstock-mcp = "rootstock_tools.mcp:main"
+rootstock-api = "rootstock_tools.http_api:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+rootstock_tools = ["static/*.html", "bundled_skills/*/SKILL.md", "bundled_skills/*/references/*.md", "data/*.json"]

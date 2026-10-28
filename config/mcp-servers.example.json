@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "rootstock-readonly": {
+      "command": "rootstock-mcp",
+      "args": []
+    }
+  }
+}

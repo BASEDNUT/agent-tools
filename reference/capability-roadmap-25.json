@@ -1,0 +1,215 @@
+{
+  "status": "BETA_WITH_KNOWN_PARTIAL_CAPABILITIES; NOT PRODUCTION_READY",
+  "version": "0.5.0b0",
+  "as_of": "2026-10-23",
+  "effects": {
+    "read": "No chain write",
+    "simulate": "No chain write; may invoke simulation infrastructure",
+    "prepare": "Construct unsigned payload only",
+    "submit": "Potential chain state mutation; requires external authorization"
+  },
+  "capabilities": [
+    {
+      "id": "registry.list_networks",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "List supported chain IDs and registry provenance",
+      "implementation_status": "implemented_read-only",
+      "validation_limits": "Pinned network configuration and local file presence; no on-chain code proof"
+    },
+    {
+      "id": "registry.resolve_deployment",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Return canonical deployed addresses and ABIs for chain/block",
+      "implementation_status": "partial",
+      "validation_limits": "Full pinned registry address/task resolution; no ABI artifact resolver or historical block versions"
+    },
+    {
+      "id": "rpc.get_health",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Probe provider availability and observed head with chain ID",
+      "implementation_status": "implemented_read-only",
+      "validation_limits": "Source-qualified chain, head and block hash; provider truth not independently attested"
+    },
+    {
+      "id": "assets.lookup",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Resolve addresses, symbols, decimals and factory evidence",
+      "implementation_status": "partial",
+      "validation_limits": "Explicit ERC20 on-chain name, symbol, decimals, total supply; factory origin not validated"
+    },
+    {
+      "id": "assets.wrapper_underlying",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Resolve wrapper and rate relationships",
+      "implementation_status": "partial",
+      "validation_limits": "ERC4626 asset() probe; Rootstock native wrappers/rates not comprehensively decoded"
+    },
+    {
+      "id": "pools.list",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Discover pools via verified Vault registrations",
+      "implementation_status": "partial",
+      "validation_limits": "Bounded Vault event discovery; no cross-provider completeness proof"
+    },
+    {
+      "id": "pools.inspect",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Read Vault, tokens, fees, weights, hooks at one block",
+      "implementation_status": "partial",
+      "validation_limits": "Vault getPoolTokens and getPoolTokenInfo raw balances, token metadata; pool math/hook/fees not decoded"
+    },
+    {
+      "id": "pools.observe",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Provide block-pinned source-qualified metrics or explicit null",
+      "implementation_status": "partial",
+      "validation_limits": "Index matches event histories to pool RPC inspections; observations not block-atomic"
+    },
+    {
+      "id": "history.events",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Get registered normalized chain events with block provenance",
+      "implementation_status": "partial",
+      "validation_limits": "SQLite event index with checkpoint/rescan/reorg consistency; no automatic comprehensive scan"
+    },
+    {
+      "id": "observations.status",
+      "effect": "read",
+      "priority": "P0",
+      "purpose": "Return coverage, staleness, synthetic/partial/unavailable",
+      "implementation_status": "partial",
+      "validation_limits": "Index presence/checkpoints and missing-metric states; no global freshness SLA"
+    },
+    {
+      "id": "topology.explore",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Explore Branch/Graft/Whorl/Tree/Grove graph",
+      "implementation_status": "partial",
+      "validation_limits": "Verified pool-token adjacency; Orchard Branch/Graft/Grove ontology not yet source-enforced"
+    },
+    {
+      "id": "accounts.positions",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Summarize verified wallet LP positions and event history",
+      "implementation_status": "partial",
+      "validation_limits": "Explicit ERC20/LP balanceOf wallet read; not whole wallet/LP accounting"
+    },
+    {
+      "id": "accounts.eligibility",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Calculate policy eligibility at a stated block",
+      "implementation_status": "not_implemented",
+      "validation_limits": "Root NUT/LP address and exact eligibility rules not yet supplied in canonical mapping"
+    },
+    {
+      "id": "analytics.tvl",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Produce TVL with rate and price provenance",
+      "implementation_status": "unavailable",
+      "validation_limits": "Real raw pool balances possible, but no authenticated token price/rate time-series"
+    },
+    {
+      "id": "analytics.volume_fees",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Report index-validated volume and fee breakdown",
+      "implementation_status": "partial",
+      "validation_limits": "Indexed last-500-event raw-token input volume/fee sums; not USD or exactly 24 hours"
+    },
+    {
+      "id": "analytics.turnover",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Compute Liquidity Turnover and related Orchard measures",
+      "implementation_status": "unavailable",
+      "validation_limits": "No matched verified 24h USD volume and TVL windows"
+    },
+    {
+      "id": "analytics.rankings",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Evaluate ranking rules on indexed history with method version",
+      "implementation_status": "partial_alternate_metric",
+      "validation_limits": "Observed indexed pool swap counts; not Orchard identity/Rank/ELO"
+    },
+    {
+      "id": "watch.subscribe",
+      "effect": "read",
+      "priority": "P1",
+      "purpose": "Establish indexed event/alert subscriptions (server-side)",
+      "implementation_status": "partial_alternative",
+      "validation_limits": "Foreground CLI watch and one-shot indexed watch.poll; no long-lived MCP event subscriptions"
+    },
+    {
+      "id": "quotes.swap",
+      "effect": "read",
+      "priority": "P2",
+      "purpose": "Quote using verified routers or quote services; no sign",
+      "implementation_status": "partial",
+      "validation_limits": "Explicit V3 pool exact-input eth_call query via Rootstock pinned Router; no SOR or transaction execution"
+    },
+    {
+      "id": "transactions.simulate",
+      "effect": "simulate",
+      "priority": "P2",
+      "purpose": "Simulate proposed action with slippage/gas/hook effects",
+      "implementation_status": "partial",
+      "validation_limits": "Explicit eth_call on pinned Rootstock targets; no trace/cross-block state guarantee"
+    },
+    {
+      "id": "transactions.prepare",
+      "effect": "prepare",
+      "priority": "P2",
+      "purpose": "Return typed unsigned calldata and approval inventory",
+      "implementation_status": "partial",
+      "validation_limits": "Unsigned exact calldata envelope with registry target restriction; no independent decoding/signing authorization"
+    },
+    {
+      "id": "policy.evaluate",
+      "effect": "read",
+      "priority": "P2",
+      "purpose": "Check permission scopes, spending/contract limits",
+      "implementation_status": "prototype_deny-all-writes",
+      "validation_limits": "Deterministic read/deny classification; no authenticated principal/spend authorization"
+    },
+    {
+      "id": "transactions.status",
+      "effect": "read",
+      "priority": "P2",
+      "purpose": "Track transaction receipt and confirmation without signing",
+      "implementation_status": "partial",
+      "validation_limits": "RPC receipt status and block hash; no independent finality threshold"
+    },
+    {
+      "id": "transactions.execute",
+      "effect": "submit",
+      "priority": "P3",
+      "purpose": "Execute only via separate independently authorized signer",
+      "implementation_status": "not_implemented___safety_gate",
+      "validation_limits": "Independent signer, transaction firewall, replay/budgets, approvals/audit unbuilt"
+    },
+    {
+      "id": "payments.quote",
+      "effect": "read",
+      "priority": "P3",
+      "purpose": "Optional service billing/x402 or ACP contract",
+      "implementation_status": "excluded_by_user",
+      "validation_limits": "Omitted from the v0.5 scope"
+    }
+  ],
+  "source": "Rootstock/Orchard initial 25-capability research catalog, 2026-10-23",
+  "note": "Status maps only repository code + offline tests. No live chain, signing, production indexer or complete MCP client conformance."
+}
