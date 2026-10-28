@@ -58,6 +58,8 @@ def parse_quantity(n):
         raise ChainError('Invalid hexadecimal RPC quantity')
     return int(n,16)
 
+USER_AGENT='rootstock-agent-tools/0.8'  # Public RPC endpoints 403 the default Python-urllib UA.
+
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs):
         raise ChainError('RPC redirect refused')
@@ -82,7 +84,7 @@ class JsonRpc:
         self.sequence+=1
         request_id=self.sequence
         raw=json.dumps({'jsonrpc':'2.0','id':request_id,'method':method,'params':params},separators=(',',':')).encode()
-        req=urllib.request.Request(self.url, data=raw, headers={'Content-Type':'application/json','Accept':'application/json'},method='POST')
+        req=urllib.request.Request(self.url, data=raw, headers={'Content-Type':'application/json','Accept':'application/json','User-Agent':USER_AGENT},method='POST')
         try:
             with self.opener.open(req,timeout=self.timeout) as response:
                 if response.status!=200: raise ChainError(f'RPC HTTP status {response.status}')

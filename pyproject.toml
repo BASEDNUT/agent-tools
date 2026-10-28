@@ -4,10 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rootstock-orchard-agent-tools"
-version = "0.7.1b0"
+version = "0.8.0"
 description = "Standalone read-only Rootstock/Orchard CLI, MCP server, Python SDK, and bundled agent skills"
 requires-python = ">=3.11"
-# License choice is pending project review; do not publish to package indexes.
+license = {text = "MIT"}
+
+[project.optional-dependencies]
+tools = ["pyyaml>=6", "jsonschema>=4"]  # audit/verification scripts in tools/ only; core runtime is stdlib-only
 
 [project.scripts]
 rootstock = "rootstock_tools.__main__:main"

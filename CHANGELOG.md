@@ -1,3 +1,24 @@
+# v0.8.0 — live-chain completion (2026-10-27)
+
+- Fixed live HTTP transport: the toolkit now sends its own User-Agent
+  (`rootstock-agent-tools/0.8`); public RPC endpoints (e.g. base.publicnode.com)
+  403-reject the default Python-urllib header. Regression test added
+  (tests/test_live_transport.py).
+- Declared `[project.optional-dependencies].tools` (pyyaml, jsonschema) for the
+  audit/verification scripts; the core runtime remains stdlib-only.
+- License selected: MIT.
+- Live end-to-end verification executed against BASED NUT deployments on
+  Base mainnet (8453) and Base Sepolia (84532): registry bootstrap from the
+  pinned monorepo, pool discovery via Vault PoolRegistered events (22 mainnet
+  pools + the Sepolia Rootstock WETH/BAL pool), pool inspection, multi-token
+  balances cross-checked against an independent raw eth_call oracle,\  transaction status on a real deployment receipt, local SQLite event sync
+  with history/cursor reads, MCP stdio round-trip (34 tools, correct -32602
+  unknown-tool error), loopback HTTP API, wheel install + Node bridge 5/5,
+  and skills install (20). Evidence: docs/E2E_EVIDENCE_2026-10-27.md.
+- Known data flag: the pinned monorepo registry still lists the four superseded
+  S113-fix contracts as resolvable entries; they are read-only provenance data
+  and must never be approved or used.
+
 # v0.7.1-beta — independent corrective audit (2026-10-23)
 
 - Fixed Keccak-256 rate-boundary padding: 135+136*k byte inputs previously hashed incorrectly. Cross-checked against OpenSSL KECCAK-256 vectors.

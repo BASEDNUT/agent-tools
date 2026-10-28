@@ -1,8 +1,8 @@
 {
   "name": "rootstock-orchard-agent-tools",
-  "version": "0.7.1-beta",
-  "release_date": "2026-10-23",
-  "status": "offline_verified_development_beta_not_production_complete",
+  "version": "0.8.0",
+  "release_date": "2026-10-27",
+  "status": "live_chain_e2e_verified_development_release",
   "source_baseline": "v0.7.0 audited archive; independent regression fixes applied in a separate v0.7.1 workspace",
   "surfaces": [
     "Python SDK",
@@ -15,7 +15,7 @@
   "capabilities_exposed": 34,
   "skills_bundled": 20,
   "test_results": {
-    "python_unittest": 138,
+    "python_unittest": 139,
     "node_bridge": 5,
     "security_fixtures": 66,
     "observation_fixtures": 15,
@@ -70,5 +70,21 @@
       "asset_metadata_cross_block_reorg"
     ],
     "all_production_chain_validations_completed": false
-  }
+  },
+  "live_e2e": {
+    "executed": true,
+    "date": "2026-10-27",
+    "chains": [
+      8453,
+      84532
+    ],
+    "evidence": "docs/E2E_EVIDENCE_2026-10-27.md",
+    "summary": "registry bootstrap blob-verified; 22 mainnet + 1 Sepolia pools discovered live; balances oracle-verified; MCP/HTTP/CLI/bridge/skills surfaces exercised"
+  },
+  "changes_v080": [
+    "user_agent_transport_fix",
+    "optional_tooling_deps_declared",
+    "mit_license_selected",
+    "live_chain_e2e_evidence"
+  ]
 }
