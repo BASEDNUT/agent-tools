@@ -1,12 +1,12 @@
 # ROOTSTOCK / ORCHARD Agent Tools
 
-**BASED NUT's official read-only agent toolchain** for the ROOTSTOCK DEX and the
+**BASED NUT's official agent toolchain** — read + guarded execution — for the ROOTSTOCK DEX and the
 Orchard ecosystem on Base (chain 8453) and Base Sepolia (84532).
 
 One tested domain core, five surfaces:
 
 - **CLI**: `rootstock` (JSON in, JSON out)
-- **MCP stdio server**: `rootstock-mcp` (34 read-only tools)
+- **MCP stdio server**: `rootstock-mcp` (37 tools: read by default, execute opt-in)
 - **Python SDK**: `rootstock_tools.Toolchain`
 - **Node/TypeScript bridge**: `sdk-ts/`
 - **Loopback HTTP API + OpenAPI**: `rootstock-api` (127.0.0.1 only)
