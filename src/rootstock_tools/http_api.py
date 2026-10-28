@@ -28,7 +28,7 @@ READ_PATHS={
 }
 OPENAPI={
     'openapi':'3.1.0',
-    'info':{'title':'Rootstock Local Read-Only API','version':'0.8.0'},
+    'info':{'title':'Rootstock Local Read-Only API','version':'0.9.0'},
     'paths':{},
 }
 for path,summary in READ_PATHS.items():
@@ -54,7 +54,7 @@ OPENAPI['paths']['/openapi.json']={'get':{'summary':'Machine-readable local API 
 
 def make_handler(toolchain:Toolchain):
     class Handler(BaseHTTPRequestHandler):
-        server_version='RootstockLocalReadOnly/0.8.0'
+        server_version='RootstockLocalReadOnly/0.9.0'
         def log_message(self,*args): return # never log requested skill contents
         def send_json(self,code,content):
             body=json.dumps(content,ensure_ascii=True,sort_keys=True).encode('utf8')

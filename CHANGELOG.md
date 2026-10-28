@@ -1,3 +1,19 @@
+# v0.9.0 — guarded execute layer (2026-10-27)
+
+- Added signer (env-key EIP-1559; key never appears in repr/str/exceptions),
+  ExecutePolicy (chain allowlist, registry-pinned router allowlist, per-tx +
+  daily wei caps, kill switch), and Executor (mandatory simulate-first,
+  receipt verification).
+- Execute-mode RPC: broadcast methods only reachable on an explicitly
+  execute=True transport; read client structurally cannot send transactions.
+- New capabilities: `transactions.send`, `transactions.call_router`,
+  `transactions.approve_router` (spender must be an allowlisted router).
+- Default remains OFF: no `ROOTSTOCK_SIGNER_KEY` = no signing path reachable.
+- Live-proven on Base Sepolia (hot wallet): zero-value self-send, funded
+  0.0001 ETH transfer, ERC20 approve, and a real 0.01 BAL -> WETH swap on the
+  Rootstock WETH/BAL pool — all receipts verified, deltas reconciled exactly.
+  Over-cap and kill-switch refusals adversarially proven live. 158 tests green.
+
 # v0.8.0 — live-chain completion (2026-10-27)
 
 - Fixed live HTTP transport: the toolkit now sends its own User-Agent

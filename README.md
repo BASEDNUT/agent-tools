@@ -13,9 +13,15 @@ One tested domain core, five surfaces:
 
 Plus **20 installable Agent Skills** (`rootstock skills install`).
 
-This is a **read-only toolkit**: no signer, no wallet keys, no broadcast, no
-transaction execution path exists anywhere in the package. That is structural,
-not a policy setting.
+**Two operating modes, structurally separated:**
+
+- **Default = read-only.** No signer env key set = no signing code reachable.
+  The read client cannot broadcast (method allowlist, structural).
+- **Opt-in guarded execution.** Set `ROOTSTOCK_SIGNER_KEY` + `ROOTSTOCK_EXECUTE_CHAINS`
+  to enable: EIP-1559 signing (key never in any output), chain allowlist,
+  router allowlist from the pinned registry, per-tx + daily wei caps,
+  mandatory simulate-first, kill switch (`ROOTSTOCK_EXECUTE_KILL=1`).
+  `pip install '.[execute]'` for eth-account.
 
 ## Install
 
@@ -74,10 +80,11 @@ print(kit.run('registry.resolve_deployment', {'chain_id': 8453, 'name': 'Vault'}
 rootstock-mcp   # stdio; 2025-11-25 legacy handshake + 2026-07-28 stateless era
 ```
 
-## Boundaries (unchanged and deliberate)
+## Boundaries
 
-- No transaction signing, broadcast, or approval. `eth_call` and unsigned
-  envelopes are not authorization to move funds.
+- Read mode signs nothing. Execute mode broadcasts ONLY through the policy
+  executor: sim-first mandatory, caps structural, kill switch absolute.
+- `eth_call` and unsigned envelopes are not authorization to move funds.
 - Payments/x402 features are **excluded by user direction**; do not add them
   back without a new request.
 - The optional policy file restricts tools inside a trusted process; it is not
@@ -89,10 +96,11 @@ rootstock-mcp   # stdio; 2025-11-25 legacy handshake + 2026-07-28 stateless era
 
 ## Status
 
-v0.8.0 — live-chain end-to-end verified on Base mainnet and Base Sepolia
-against BASED NUT production deployments (see evidence doc). Still a
-read-only toolkit by design: live-data pricing, Orchard ELO, and any signing
-service remain out of scope here.
+v0.9.0 — read + guarded-execute toolchain, live-proven on Base Sepolia:
+zero-value and funded transfers, ERC20 approve, and a real swap on the
+Rootstock WETH/BAL pool — all policy-gated, simulated, receipt-verified.
+Over-cap and kill-switch refusals live-proven. See
+`docs/E2E_EVIDENCE_2026-10-27.md` for the full battery.
 
 ## License
 

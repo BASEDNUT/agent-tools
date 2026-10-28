@@ -1,24 +1,25 @@
 {
   "capabilities": [
     {
-      "description": "Read up to 32 explicitly provided token balances at one pinned chain block (no automatic portfolio discovery).",
+      "name": "accounts.balances",
       "effect": "read",
+      "description": "Read up to 32 explicitly provided token balances at one pinned chain block (no automatic portfolio discovery).",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
           },
+          "wallet": {
+            "type": "string"
+          },
           "tokens": {
+            "type": "array",
             "items": {
               "type": "string"
             },
-            "maxItems": 32,
             "minItems": 1,
-            "type": "array"
-          },
-          "wallet": {
-            "type": "string"
+            "maxItems": 32
           }
         },
         "required": [
@@ -26,15 +27,15 @@
           "wallet",
           "tokens"
         ],
-        "type": "object"
-      },
-      "name": "accounts.balances"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Check on-chain balances against explicitly configured Orchard root/LP rules; not an access grant.",
+      "name": "accounts.eligibility",
       "effect": "read",
+      "description": "Check on-chain balances against explicitly configured Orchard root/LP rules; not an access grant.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -47,23 +48,23 @@
           "chain_id",
           "wallet"
         ],
-        "type": "object"
-      },
-      "name": "accounts.eligibility"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Read wallet balance of explicitly named ERC20 or LP token, not full portfolio.",
+      "name": "accounts.positions",
       "effect": "read",
+      "description": "Read wallet balance of explicitly named ERC20 or LP token, not full portfolio.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
           },
-          "token": {
+          "wallet": {
             "type": "string"
           },
-          "wallet": {
+          "token": {
             "type": "string"
           }
         },
@@ -72,15 +73,15 @@
           "wallet",
           "token"
         ],
-        "type": "object"
-      },
-      "name": "accounts.positions"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Rank pools by observed indexed swap count, not wallet ELO or APY.",
+      "name": "analytics.rankings",
       "effect": "read",
+      "description": "Rank pools by observed indexed swap count, not wallet ELO or APY.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -92,15 +93,15 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "analytics.rankings"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "analytics.turnover",
+      "effect": "read",
       "description": "Report turnover only with known, matching volume and TVL denominator.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -112,15 +113,15 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "analytics.turnover"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "analytics.tvl",
+      "effect": "read",
       "description": "Explain TVL availability based on verified price/reserve inputs; never fabricate USD estimates.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -132,15 +133,15 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "analytics.tvl"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Aggregate available indexed swap input and fee amounts in raw token units; never presume complete coverage.",
+      "name": "analytics.volume_fees",
       "effect": "read",
+      "description": "Aggregate available indexed swap input and fee amounts in raw token units; never presume complete coverage.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -155,68 +156,68 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "analytics.volume_fees"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "assets.lookup",
+      "effect": "read",
       "description": "Read explicit ERC20 contract metadata directly from chain.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
-          "address": {
-            "type": "string"
-          },
           "chain_id": {
             "type": "integer"
+          },
+          "address": {
+            "type": "string"
           }
         },
         "required": [
           "chain_id",
           "address"
         ],
-        "type": "object"
-      },
-      "name": "assets.lookup"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "assets.wrapper_underlying",
+      "effect": "read",
       "description": "Probe ERC4626 asset() directly; unsupported wrappers remain unknown.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
-          "address": {
-            "type": "string"
-          },
           "chain_id": {
             "type": "integer"
+          },
+          "address": {
+            "type": "string"
           }
         },
         "required": [
           "chain_id",
           "address"
         ],
-        "type": "object"
-      },
-      "name": "assets.wrapper_underlying"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "List the implemented read-only capabilities and their schemas.",
+      "name": "capabilities.list",
       "effect": "read",
+      "description": "List the implemented read-only capabilities and their schemas.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {},
         "required": [],
-        "type": "object"
-      },
-      "name": "capabilities.list"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Query locally indexed Vault swap, pool and liquidity events.",
+      "name": "history.events",
       "effect": "read",
+      "description": "Query locally indexed Vault swap, pool and liquidity events.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -224,11 +225,11 @@
           "kind": {
             "type": "string"
           },
-          "limit": {
-            "type": "integer"
-          },
           "pool": {
             "type": "string"
+          },
+          "limit": {
+            "type": "integer"
           },
           "since_block": {
             "type": "integer"
@@ -237,15 +238,15 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "history.events"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "history.status",
+      "effect": "read",
       "description": "Describe event-index checkpoints and local data coverage.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -254,15 +255,15 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "history.status"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "observations.status",
+      "effect": "read",
       "description": "Report which indexed observations exist and which analytics are missing.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -271,15 +272,15 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "observations.status"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Fail-closed policy demonstration: reads allowed, writes denied; not signer authorization.",
+      "name": "policy.evaluate",
       "effect": "read",
+      "description": "Fail-closed policy demonstration: reads allowed, writes denied; not signer authorization.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "action": {
             "type": "string"
@@ -292,15 +293,15 @@
           "action",
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "policy.evaluate"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Read actual pool token addresses via Rootstock Vault; no guessed reserve/TVL.",
+      "name": "pools.inspect",
       "effect": "read",
+      "description": "Read actual pool token addresses via Rootstock Vault; no guessed reserve/TVL.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -313,15 +314,15 @@
           "chain_id",
           "pool"
         ],
-        "type": "object"
-      },
-      "name": "pools.inspect"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Read Vault PoolRegistered events for an explicitly bounded inclusive block window, with block provenance.",
+      "name": "pools.list",
       "effect": "read",
+      "description": "Read Vault PoolRegistered events for an explicitly bounded inclusive block window, with block provenance.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -329,10 +330,10 @@
           "from_block": {
             "type": "integer"
           },
-          "limit": {
+          "to_block": {
             "type": "integer"
           },
-          "to_block": {
+          "limit": {
             "type": "integer"
           }
         },
@@ -341,15 +342,15 @@
           "from_block",
           "to_block"
         ],
-        "type": "object"
-      },
-      "name": "pools.list"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Read pool onchain data plus local indexed registration evidence.",
+      "name": "pools.observe",
       "effect": "read",
+      "description": "Read pool onchain data plus local indexed registration evidence.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -362,32 +363,32 @@
           "chain_id",
           "pool"
         ],
-        "type": "object"
-      },
-      "name": "pools.observe"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Return explicit routing prerequisites; quote unavailable without audited Rootstock SOR.",
+      "name": "quotes.swap",
       "effect": "read",
+      "description": "Return explicit routing prerequisites; quote unavailable without audited Rootstock SOR.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
-          "amount_raw": {
-            "type": "string"
-          },
           "chain_id": {
             "type": "integer"
-          },
-          "pool": {
-            "type": "string"
-          },
-          "sender": {
-            "type": "string"
           },
           "token_in": {
             "type": "string"
           },
           "token_out": {
+            "type": "string"
+          },
+          "amount_raw": {
+            "type": "string"
+          },
+          "pool": {
+            "type": "string"
+          },
+          "sender": {
             "type": "string"
           }
         },
@@ -397,26 +398,26 @@
           "token_out",
           "amount_raw"
         ],
-        "type": "object"
-      },
-      "name": "quotes.swap"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Return reviewed partial read-only ABI signatures and verified Vault event topics; not a full exact build ABI.",
+      "name": "registry.abi_catalog",
       "effect": "read",
+      "description": "Return reviewed partial read-only ABI signatures and verified Vault event topics; not a full exact build ABI.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {},
         "required": [],
-        "type": "object"
-      },
-      "name": "registry.abi_catalog"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Return an exact selector for a reviewed read ABI function, not a deploy/transaction authorization.",
+      "name": "registry.abi_selector",
       "effect": "read",
+      "description": "Return an exact selector for a reviewed read ABI function, not a deploy/transaction authorization.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "interface": {
             "type": "string"
@@ -429,15 +430,15 @@
           "interface",
           "signature"
         ],
-        "type": "object"
-      },
-      "name": "registry.abi_selector"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "registry.list_contracts",
+      "effect": "read",
       "description": "List Rootstock registry deployments, preserving task identity and deprecated records.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -446,26 +447,26 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "registry.list_contracts"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "registry.list_networks",
+      "effect": "read",
       "description": "List Rootstock network identities and available local source provenance.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {},
         "required": [],
-        "type": "object"
-      },
-      "name": "registry.list_networks"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "registry.resolve_deployment",
+      "effect": "read",
       "description": "Resolve a Rootstock deployment against a pinned canonical local registry; ambiguous names require task.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -481,15 +482,15 @@
           "chain_id",
           "name"
         ],
-        "type": "object"
-      },
-      "name": "registry.resolve_deployment"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "registry.verify_contract",
+      "effect": "read",
       "description": "Check pinned Rootstock contract code exists on the selected chain; not a bytecode audit.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -505,15 +506,15 @@
           "chain_id",
           "name"
         ],
-        "type": "object"
-      },
-      "name": "registry.verify_contract"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Read the configured Base RPC chain ID, latest block and hash.",
+      "name": "rpc.get_health",
       "effect": "read",
+      "description": "Read the configured Base RPC chain ID, latest block and hash.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -522,26 +523,26 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "rpc.get_health"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "List bundled Rootstock and Orchard agent skills; no third-party skill installation.",
+      "name": "skills.list",
       "effect": "read",
+      "description": "List bundled Rootstock and Orchard agent skills; no third-party skill installation.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {},
         "required": [],
-        "type": "object"
-      },
-      "name": "skills.list"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Read one bundled SKILL.md by its exact, validated skill name.",
+      "name": "skills.read",
       "effect": "read",
+      "description": "Read one bundled SKILL.md by its exact, validated skill name.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "name": {
             "type": "string"
@@ -550,15 +551,15 @@
         "required": [
           "name"
         ],
-        "type": "object"
-      },
-      "name": "skills.read"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "topology.explore",
+      "effect": "read",
       "description": "Construct token-pool graph from indexed pools and RPC token lists, labeling missing tokens.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -570,15 +571,15 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "topology.explore"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "topology.rooted",
+      "effect": "read",
       "description": "Provisional rooted Branch/Graft/Whorl classification from observed pools and configured root; not canonical Orchard ranks.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -590,15 +591,72 @@
         "required": [
           "chain_id"
         ],
-        "type": "object"
-      },
-      "name": "topology.rooted"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "transactions.approve_router",
+      "effect": "read",
+      "description": "ERC20 approve whose spender must be an allowlisted Rootstock router. Arbitrary spenders refused. Sim-first, policy-gated.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "chain_id": {
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          },
+          "router": {
+            "type": "string"
+          },
+          "amount_wei": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "chain_id",
+          "token",
+          "router",
+          "amount_wei"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "transactions.call_router",
+      "effect": "read",
+      "description": "Broadcast a raw contract call to an allowlisted Rootstock router only. Arbitrary targets refused. Sim-first, policy-gated.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "chain_id": {
+            "type": "integer"
+          },
+          "router": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "value_wei": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "chain_id",
+          "router",
+          "data"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "transactions.prepare",
+      "effect": "read",
       "description": "Return an unsigned policy-unapproved transaction envelope, only for pinned Rootstock targets.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -611,15 +669,40 @@
           "chain_id",
           "transaction_json"
         ],
-        "type": "object"
-      },
-      "name": "transactions.prepare"
+        "additionalProperties": false
+      }
     },
     {
+      "name": "transactions.send",
+      "effect": "read",
+      "description": "Sign and broadcast an ETH value transfer through the policy-gated executor (env signer key, chain+value caps, simulation-first). Caps are structural; no bypass.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "chain_id": {
+            "type": "integer"
+          },
+          "to": {
+            "type": "string"
+          },
+          "value_wei": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "chain_id",
+          "to",
+          "value_wei"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "transactions.simulate",
+      "effect": "read",
       "description": "Explicit eth_call on a pinned Rootstock target; no signing or policy approval.",
-      "effect": "read",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -632,15 +715,15 @@
           "chain_id",
           "transaction_json"
         ],
-        "type": "object"
-      },
-      "name": "transactions.simulate"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Read transaction receipt and unverified finality from RPC.",
+      "name": "transactions.status",
       "effect": "read",
+      "description": "Read transaction receipt and unverified finality from RPC.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
@@ -653,26 +736,26 @@
           "chain_id",
           "hash"
         ],
-        "type": "object"
-      },
-      "name": "transactions.status"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Query indexed Vault events after a specific block and log index, preserving intra-block updates.",
+      "name": "watch.cursor",
       "effect": "read",
+      "description": "Query indexed Vault events after a specific block and log index, preserving intra-block updates.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
-            "type": "integer"
-          },
-          "limit": {
             "type": "integer"
           },
           "since_block": {
             "type": "integer"
           },
           "since_log_index": {
+            "type": "integer"
+          },
+          "limit": {
             "type": "integer"
           }
         },
@@ -681,23 +764,23 @@
           "since_block",
           "since_log_index"
         ],
-        "type": "object"
-      },
-      "name": "watch.cursor"
+        "additionalProperties": false
+      }
     },
     {
-      "description": "Check locally indexed events newer than a given block; caller schedules repeated polls.",
+      "name": "watch.poll",
       "effect": "read",
+      "description": "Check locally indexed events newer than a given block; caller schedules repeated polls.",
       "input_schema": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "chain_id": {
             "type": "integer"
           },
-          "limit": {
+          "since_block": {
             "type": "integer"
           },
-          "since_block": {
+          "limit": {
             "type": "integer"
           }
         },
@@ -705,9 +788,8 @@
           "chain_id",
           "since_block"
         ],
-        "type": "object"
-      },
-      "name": "watch.poll"
+        "additionalProperties": false
+      }
     }
   ]
 }

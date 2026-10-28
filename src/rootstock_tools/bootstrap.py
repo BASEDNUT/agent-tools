@@ -11,7 +11,7 @@ def fetch_registries(dest:Path):
     opener=build_opener(NoRedirect())
     validated={}
     for name,blob in CANONICAL_BLOBS.items():
-        req=Request(SOURCE_PREFIX+name,headers={'Accept':'application/json','User-Agent':'rootstock-agent-tools/0.8'})
+        req=Request(SOURCE_PREFIX+name,headers={'Accept':'application/json','User-Agent':'rootstock-agent-tools/0.9'})
         try:
             with opener.open(req,timeout=15) as r: raw=r.read(100_001)
         except OSError as exc: raise RegistryError('Unable to download frozen canonical source: '+str(exc)) from exc

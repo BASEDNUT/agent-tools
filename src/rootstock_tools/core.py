@@ -11,6 +11,8 @@ from .services import asset_lookup, wrapper_underlying, pool_inspect, wallet_bal
 from .indexer import EventIndex
 from .rpc import require_address
 from .policy import PolicyGate, PolicyError
+from .signer import Signer, SignerError
+from .executor import Executor, ExecutePolicy, ExecuteError
 from .valuation import PriceBook, value_pool
 from .orchard import OrchardConfig, eligibility, rooted_structure
 from .abi_catalog import catalog, signature_info
@@ -57,11 +59,14 @@ CAPABILITIES.update({
  'transactions.prepare':{'description':'Return an unsigned policy-unapproved transaction envelope, only for pinned Rootstock targets.', 'properties':{'chain_id':'integer','transaction_json':'string'},'required':['chain_id','transaction_json']},
  'transactions.status':{'description':'Read transaction receipt and unverified finality from RPC.', 'properties':{'chain_id':'integer','hash':'string'},'required':['chain_id','hash']},
  'policy.evaluate':{'description':'Fail-closed policy demonstration: reads allowed, writes denied; not signer authorization.', 'properties':{'action':'string','chain_id':'integer'},'required':['action','chain_id']},
+ 'transactions.send':{'description':'Sign and broadcast an ETH value transfer through the policy-gated executor (env signer key, chain+value caps, simulation-first). Caps are structural; no bypass.','properties':{'chain_id':'integer','to':'string','value_wei':'string'},'required':['chain_id','to','value_wei']},
+ 'transactions.call_router':{'description':'Broadcast a raw contract call to an allowlisted Rootstock router only. Arbitrary targets refused. Sim-first, policy-gated.','properties':{'chain_id':'integer','router':'string','data':'calldata','value_wei':'string'},'required':['chain_id','router','data']},
+ 'transactions.approve_router':{'description':'ERC20 approve whose spender must be an allowlisted Rootstock router. Arbitrary spenders refused. Sim-first, policy-gated.','properties':{'chain_id':'integer','token':'string','router':'string','amount_wei':'string'},'required':['chain_id','token','router','amount_wei']},
 })
 
 def schema_for(cap):
     spec=CAPABILITIES[cap]
-    return {'type':'object','properties':{name:({'type':'array','items':{'type':'string'},'minItems':1,'maxItems':32} if typ=='array' else {'type':typ}) for name,typ in spec['properties'].items()},'required':spec['required'],'additionalProperties':False}
+    return {'type':'object','properties':{name:({'type':'array','items':{'type':'string'},'minItems':1,'maxItems':32} if typ=='array' else {'type':'string'} if typ=='calldata' else {'type':typ}) for name,typ in spec['properties'].items()},'required':spec['required'],'additionalProperties':False}
 
 def validate_arguments(name,args):
     if name not in CAPABILITIES: raise CapabilityError('Unknown or unavailable capability; no transaction tools are supported')
@@ -76,6 +81,7 @@ def validate_arguments(name,args):
         if expected=='integer' and (type(value) is not int or value<0): raise CapabilityError(f'{key} must be a nonnegative integer')
         if expected=='array' and (not isinstance(value,list) or not 1<=len(value)<=32 or any(not isinstance(v,str) or len(v)>80 for v in value)): raise CapabilityError(f'{key} requires 1..32 strings')
         if expected=='string' and (not isinstance(value,str) or not value.strip() or len(value)>300): raise CapabilityError(f'{key} must be a nonempty string of at most 300 characters')
+        if expected=='calldata' and (not isinstance(value,str) or not value.startswith('0x') or len(value)>20000 or any(c not in '0123456789abcdefABCDEF' for c in value[2:])): raise CapabilityError(f'{key} must be 0x-prefixed hex calldata of at most 20000 characters')
     if 'chain_id' in args: require_chain(args['chain_id'])
     return args
 
@@ -95,6 +101,7 @@ class Toolchain:
         if bool(policy_file)!=bool(agent_id):
             raise PolicyError('Process policy requires both a policy file and trusted launcher agent identity')
         self.policy=PolicyGate(Path(policy_file),agent_id) if policy_file else None
+        self._executor_instance=None
 
     def _rpc(self,chain):
         config=require_chain(chain)
@@ -218,6 +225,15 @@ class Toolchain:
             reg=load_registry(self.registry_dir/CHAIN_IDS[chain],allow_unpinned=False)
             allowed={address.lower() for contracts in reg.tasks.values() for address in contracts.values() if int(address,16)!=0}
             if target not in allowed:raise CapabilityError('Target absent from source-pinned Rootstock deployment registry')
+        if name=='transactions.send':
+            ex=self._executor(args['chain_id'])
+            return ex.send_value(args['chain_id'],args['to'],int(args['value_wei']))
+        if name=='transactions.call_router':
+            ex=self._executor(args['chain_id'])
+            return ex.send_call(args['chain_id'],args['router'],args['data'],int(args.get('value_wei','0')))
+        if name=='transactions.approve_router':
+            ex=self._executor(args['chain_id'])
+            return ex.approve_router(args['chain_id'],args['token'],args['router'],int(args['amount_wei']))
             if name=='transactions.simulate':return simulate_known_transaction(self._rpc(chain),tx,allowed)
             import re
             require_address(tx['from'])
@@ -245,3 +261,41 @@ class Toolchain:
             if file.is_symlink(): raise CapabilityError('Symlink skill refused')
             return {'name':skill,'content':file.read_text(encoding='utf8'),'source':'built-in verified package content'}
         raise CapabilityError('Not implemented')
+
+    def _executor(self, chain_id):
+        if self._executor_instance is None:
+            import os as _os
+            allow=_os.getenv('ROOTSTOCK_EXECUTE_CHAINS',str(chain_id))
+            chains={int(c) for c in allow.split(',') if c.strip().isdigit()}
+            if chain_id not in chains:
+                raise CapabilityError('Chain not enabled for execution; set ROOTSTOCK_EXECUTE_CHAINS')
+            policy=ExecutePolicy(allowed_chains=chains,
+                router_allowlist=self._router_allowlist(chains),
+                max_value_wei=int(_os.getenv('ROOTSTOCK_EXECUTE_MAX_WEI','1000000000000000')),
+                daily_budget_wei=int(_os.getenv('ROOTSTOCK_EXECUTE_DAILY_WEI','5000000000000000')),
+                require_simulation=_os.getenv('ROOTSTOCK_EXECUTE_NOSIM','')!='1',
+                kill_switch=_os.getenv('ROOTSTOCK_EXECUTE_KILL','')=='1')
+            signer=Signer.from_env('ROOTSTOCK_SIGNER_KEY')
+            config=require_chain(chain_id)
+            env='ROOTSTOCK_RPC_BASE' if chain_id==8453 else 'ROOTSTOCK_RPC_BASE_SEPOLIA'
+            import os as _os2
+            url=self.rpc_overrides.get(chain_id) or _os2.getenv(env) or config['rpc']
+            exec_rpc=JsonRpc(url,chain_id,allow_local=self.allow_local_rpc,execute=True)
+            self._executor_instance=Executor(signer,policy=policy,rpc=exec_rpc)
+        return self._executor_instance
+
+    def _router_allowlist(self, chains):
+        import json as _json, re as _re
+        out={}
+        for c in chains:
+            fn=CHAIN_IDS.get(c)
+            routers=set()
+            if fn and (self.registry_dir/fn).is_file():
+                try:
+                    txt=_json.dumps(_json.loads((self.registry_dir/fn).read_text()))
+                    for m in _re.finditer(r'"([Rr]outer[^"]*)"\s*:\s*"(0x[0-9a-fA-F]{40})"', txt):
+                        routers.add(m.group(2).lower())
+                except Exception:
+                    pass
+            out[c]=routers
+        return out

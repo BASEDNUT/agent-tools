@@ -58,14 +58,14 @@ def parse_quantity(n):
         raise ChainError('Invalid hexadecimal RPC quantity')
     return int(n,16)
 
-USER_AGENT='rootstock-agent-tools/0.8'  # Public RPC endpoints 403 the default Python-urllib UA.
+USER_AGENT='rootstock-agent-tools/0.9'  # Public RPC endpoints 403 the default Python-urllib UA.
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs):
         raise ChainError('RPC redirect refused')
 
 class JsonRpc:
-    def __init__(self, url, chain_id, *, allow_local=False, timeout=9):
+    def __init__(self, url, chain_id, *, allow_local=False, timeout=9, execute=False):
         require_chain(chain_id)
         parts=urlsplit(url)
         local=(parts.hostname or '').lower() in ('127.0.0.1','localhost','::1')
@@ -77,10 +77,15 @@ class JsonRpc:
         self.timeout=timeout
         self.opener=urllib.request.build_opener(NoRedirect())
         self.sequence=0
+        self.execute=execute  # execute-mode transport: adds broadcast-only methods
 
     def call(self, method, params):
-        if method not in ('eth_chainId','eth_blockNumber','eth_getBlockByNumber','eth_getLogs','eth_getCode','eth_call','eth_getTransactionReceipt'):
-            raise ChainError('RPC method not on read-only allowlist')
+        allowed=('eth_chainId','eth_blockNumber','eth_getBlockByNumber','eth_getLogs','eth_getCode','eth_call','eth_getTransactionReceipt')
+        if self.execute:
+            # execute mode adds ONLY signed-broadcast submission; no eth_sign, no arbitrary methods
+            allowed=allowed+('eth_sendRawTransaction','eth_getTransactionCount','eth_estimateGas','eth_gasPrice')
+        if method not in allowed:
+            raise ChainError('RPC method not on allowlist')
         self.sequence+=1
         request_id=self.sequence
         raw=json.dumps({'jsonrpc':'2.0','id':request_id,'method':method,'params':params},separators=(',',':')).encode()

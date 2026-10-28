@@ -1,21 +1,22 @@
 {
   "name": "rootstock-orchard-agent-tools",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "release_date": "2026-10-27",
-  "status": "live_chain_e2e_verified_development_release",
+  "status": "live_chain_read_and_guarded_execute_release",
   "source_baseline": "v0.7.0 audited archive; independent regression fixes applied in a separate v0.7.1 workspace",
   "surfaces": [
     "Python SDK",
     "Node/TypeScript CLI bridge",
     "JSON CLI",
     "MCP stdio",
+    "20 installable Agent Skills",
     "loopback-only HTTP+OpenAPI",
-    "20 installable Agent Skills"
+    "policy-gated execution (signer + executor)"
   ],
   "capabilities_exposed": 34,
   "skills_bundled": 20,
   "test_results": {
-    "python_unittest": 139,
+    "python_unittest": 158,
     "node_bridge": 5,
     "security_fixtures": 66,
     "observation_fixtures": 15,
@@ -86,5 +87,30 @@
     "optional_tooling_deps_declared",
     "mit_license_selected",
     "live_chain_e2e_evidence"
-  ]
+  ],
+  "execute_layer": {
+    "added": [
+      "signer (env-key, EIP-1559, key never in output)",
+      "ExecutePolicy (chain allowlist, router allowlist from pinned registry, per-tx + daily wei caps, kill switch)",
+      "Executor (sim-first mandatory, receipt verification)",
+      "execute-mode RPC (broadcast methods gated behind execute=True)",
+      "transactions.send / transactions.call_router / transactions.approve_router"
+    ],
+    "default_state": "OFF \u2014 execution requires ROOTSTOCK_SIGNER_KEY + ROOTSTOCK_EXECUTE_CHAINS env; absent key = structurally read-only",
+    "live_e2e": [
+      "zero-value self-send 0xef8b45e4 (block 51152466, success)",
+      "funded 0.0001 ETH transfer 0xd1338c2b (block 51152824, success)",
+      "over-cap REFUSED, kill-switch REFUSED (live adversarial proofs)",
+      "ERC20 approve to router 0x683f7a55 (success)",
+      "live swap on Rootstock WETH/BAL pool 0x100490bc (block 51157669, success; deltas verified: -0.01 BAL, +0.0000002305 WETH)"
+    ],
+    "adversarial_tests": [
+      "key never in repr/str/exceptions",
+      "policy bypass attempts refused",
+      "kill switch blocks all",
+      "arbitrary router targets refused",
+      "simulate-first mandatory",
+      "read RPC cannot broadcast (structural)"
+    ]
+  }
 }
