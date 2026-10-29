@@ -4,14 +4,14 @@ from pathlib import Path
 from urllib.request import Request, build_opener
 from .registry import CANONICAL_BLOBS, git_blob_sha, RegistryError
 from .rpc import NoRedirect
-SOURCE_COMMIT='f64acbb5f3d2d961bae96d8a8f596ad937a5f6a8'
+SOURCE_COMMIT='6206c91643e2e87c43164be90f963c91a11329ab'
 SOURCE_PREFIX='https://raw.githubusercontent.com/BASEDNUT/rootstock-monorepo/'+SOURCE_COMMIT+'/deployments/'
 
 def fetch_registries(dest:Path):
     opener=build_opener(NoRedirect())
     validated={}
     for name,blob in CANONICAL_BLOBS.items():
-        req=Request(SOURCE_PREFIX+name,headers={'Accept':'application/json','User-Agent':'rootstock-agent-tools/0.9'})
+        req=Request(SOURCE_PREFIX+name,headers={'Accept':'application/json','User-Agent':'rootstock-agent-tools/0.9.1'})
         try:
             with opener.open(req,timeout=15) as r: raw=r.read(100_001)
         except OSError as exc: raise RegistryError('Unable to download frozen canonical source: '+str(exc)) from exc

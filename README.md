@@ -91,6 +91,7 @@ rootstock-mcp   # stdio; 2025-11-25 legacy handshake + 2026-07-28 stateless era
   a sandbox for arbitrary local code.
 - The HTTP API binds 127.0.0.1 only and must not be exposed publicly.
 - The pinned registry is provenance data. Resolution is not approval.
+- Superseded S113-fix deployments (11 addresses) are refused at load and resolve time — hardcoded blocklist + registry `superseded` map enforcement.
   Four contracts superseded by the S113-fix redeployment remain listed
   upstream and must never be used.
 

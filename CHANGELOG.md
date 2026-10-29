@@ -1,3 +1,20 @@
+# v0.9.1 — superseded-deployment guard + registry repin (2026-10-28)
+
+- Upstream resolved: monorepo commit `6206c91643e2e87c43164be90f963c91a11329ab` syncs
+  the S113-fix redeploys into the canonical registries and adds an explicit
+  `superseded` never-use map (11 defective deployments: 7 mainnet incl. 3 oracle
+  factories with zero sequencer feed, 4 Sepolia owner-defect contracts).
+- `CANONICAL_BLOBS` repinned (base.json `39997741...`, base-sepolia.json `825ecb8d...`);
+  `SOURCE_COMMIT` repinned to `6206c9164`.
+- New defense-in-depth: `KNOWN_SUPERSEDED` — 11 hardcoded addresses; any registry
+  (pinned or `--allow-unpinned`) that lists one under a resolvable task fails closed
+  at load time.
+- New registry `superseded` map parsing: shape-validated (address keys, name,
+  `superseded_by` must be deployed in tasks, `never_use: true`); declared-superseded
+  addresses are refused at resolve time even if some task still lists them.
+- Fixtures mirror the post-sync upstream shape (live addresses + superseded map).
+- 168 tests green (10 new superseded-guard tests, RED -> GREEN).
+
 # v0.9.0 — guarded execute layer (2026-10-27)
 
 - Added signer (env-key EIP-1559; key never appears in repr/str/exceptions),

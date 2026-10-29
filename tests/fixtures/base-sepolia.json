@@ -1,18 +1,44 @@
 {
-  "network":"baseSepolia", "chainId":84532, "contracts_total":67,
+  "network": "baseSepolia",
+  "chainId": 84532,
+  "contracts_total": 67,
   "tasks": {
     "v3/tasks/20241204-v3-vault": {
-      "Vault":"0xEf348c4222ab9c08aFE768AD722Fb02b10d640c9"
+      "Vault": "0xEf348c4222ab9c08aFE768AD722Fb02b10d640c9"
     },
     "v3/tasks/20250321-v3-vault-factory-v2": {
-      "Vault":"0xEf348c4222ab9c08aFE768AD722Fb02b10d640c9"
+      "Vault": "0xEf348c4222ab9c08aFE768AD722Fb02b10d640c9"
     },
     "v3/tasks/20250307-v3-router-v2": {
-      "Router":"0xDD9793Cd4B79a8bd65D690C64A3074D023Dfa759"
+      "Router": "0xDD9793Cd4B79a8bd65D690C64A3074D023Dfa759"
     },
     "v3/tasks/20260115-v3-weighted-pool-v2": {
-      "WeightedPoolFactory":"0x277D7dDe3C6762C31CfB438c9331376fE8887A7c"
+      "WeightedPoolFactory": "0x277D7dDe3C6762C31CfB438c9331376fE8887A7c"
+    },
+    "v3/tasks/20250806-v3-token-pair-registry": {
+      "TokenPairRegistry": "0x54d1E9EAc2eAF5fABA009dc5Dc80dc24DC1957c0"
+    },
+    "v3/tasks/20250530-v3-cow-swap-fee-burner-v2": {
+      "CowSwapFeeBurner": "0x031FE78a911Dfd8c14f6f267836AeF364B1981FF"
     }
   },
-  "_fixture_note":"SOURCE EXCERPT ONLY. Counts describe upstream full registry. NOT canonical, NOT verified onchain."
+  "_fixture_note": "SOURCE EXCERPT ONLY. Counts describe upstream full registry. NOT canonical, NOT verified onchain. Mirrors post-S113-fix-sync upstream shape (tasks live addresses + superseded never-use map).",
+  "superseded": {
+    "0x43DBB8F3bb9f6277e350f37Adf240518c0964f06": {
+      "name": "TokenPairRegistry",
+      "task": "v3/tasks/20250806-v3-token-pair-registry",
+      "superseded_by": "0x54d1E9EAc2eAF5fABA009dc5Dc80dc24DC1957c0",
+      "reason": "S113-fix owner defect (upstream owner); redeployed owner=hot wallet",
+      "superseded_date": "2026-10-05",
+      "never_use": true
+    },
+    "0xF51Efd4762d5EbdCBa49472C266A5c37dC4ddD5a": {
+      "name": "CowSwapFeeBurner",
+      "task": "v3/tasks/20250530-v3-cow-swap-fee-burner-v2",
+      "superseded_by": "0x031FE78a911Dfd8c14f6f267836AeF364B1981FF",
+      "reason": "S113-fix owner defect (upstream owner); redeployed owner=hot wallet",
+      "superseded_date": "2026-10-05",
+      "never_use": true
+    }
+  }
 }

@@ -393,7 +393,7 @@ Showcase/source: https://arxiv.org/abs/2610.11169
 - **L010 — Base wallet agent skills** (P0): https://github.com/base/skills — Official Base Wallet MCP skills and protocol integrations
 - **L011 — Base Wallet MCP plugin Balancer** (P0): https://github.com/base/skills/blob/main/skills/wallet-mcp/plugins/balancer.md — Balancer community integration maintained by Base, not Balancer
 - **L012 — BASED NUT — primitives** (P0): https://github.com/BASEDNUT/sol-contracts — TokenFactory and WrapperFactory source
-- **L013 — BASED NUT — Rootstock monorepo** (P0): https://github.com/BASEDNUT/rootstock-monorepo — Canonical project code; inspect deployments, ABIs, event scanning [commit f64acbb5f3d2d961bae96d8a8f596ad937a5f6a8]
+- **L013 — BASED NUT — Rootstock monorepo** (P0): https://github.com/BASEDNUT/rootstock-monorepo — Canonical project code; inspect deployments, ABIs, event scanning [commit 6206c91643e2e87c43164be90f963c91a11329ab — S113-fix registry sync: superseded never-use map live]
 - **L014 — Orchard application** (P0): https://orchard.basednut.com — Orchard user-facing interpretation layer; V25 under development
 - **L015 — Rootstock documentation** (P0): https://docs.basednut.com/rootstock — Canonical product documentation
 - **L016 — Uniswap AI developer overview** (P0): https://developers.uniswap.org/docs/uniswap-ai/overview — Official AI integration guidance

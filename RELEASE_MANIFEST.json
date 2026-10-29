@@ -1,7 +1,7 @@
 {
   "name": "rootstock-orchard-agent-tools",
-  "version": "0.9.0",
-  "release_date": "2026-10-27",
+  "version": "0.9.1",
+  "release_date": "2026-10-28",
   "status": "live_chain_read_and_guarded_execute_release",
   "source_baseline": "v0.7.0 audited archive; independent regression fixes applied in a separate v0.7.1 workspace",
   "surfaces": [
@@ -16,7 +16,7 @@
   "capabilities_exposed": 34,
   "skills_bundled": 20,
   "test_results": {
-    "python_unittest": 158,
+    "python_unittest": 168,
     "node_bridge": 5,
     "security_fixtures": 66,
     "observation_fixtures": 15,
@@ -96,7 +96,7 @@
       "execute-mode RPC (broadcast methods gated behind execute=True)",
       "transactions.send / transactions.call_router / transactions.approve_router"
     ],
-    "default_state": "OFF \u2014 execution requires ROOTSTOCK_SIGNER_KEY + ROOTSTOCK_EXECUTE_CHAINS env; absent key = structurally read-only",
+    "default_state": "OFF — execution requires ROOTSTOCK_SIGNER_KEY + ROOTSTOCK_EXECUTE_CHAINS env; absent key = structurally read-only",
     "live_e2e": [
       "zero-value self-send 0xef8b45e4 (block 51152466, success)",
       "funded 0.0001 ETH transfer 0xd1338c2b (block 51152824, success)",
@@ -112,5 +112,23 @@
       "simulate-first mandatory",
       "read RPC cannot broadcast (structural)"
     ]
+  },
+  "superseded_guard": {
+    "added": [
+      "KNOWN_SUPERSEDED hardcoded 11-address blocklist (load-time fail-closed)",
+      "registry superseded map validation (superseded_by must be deployed; never_use must be true)",
+      "resolve-time refusal of any superseded address, incl. --allow-unpinned registries",
+      "CANONICAL_BLOBS + SOURCE_COMMIT repinned to monorepo 6206c91643e2e87c43164be90f963c91a11329ab"
+    ],
+    "repinned_blobs": {
+      "base.json": "3999774121968bef9f6d5abca9748a4c62b14f10",
+      "base-sepolia.json": "825ecb8dedab18d5867068572bd82cd85adceed7"
+    },
+    "superseded_count": {
+      "mainnet": 7,
+      "sepolia": 4
+    },
+    "live_verification": "2026-10-28: new contracts live at correct owners; old carry upstream owners; getSequencerUptimeFeed reads Chainlink 0xBCF85224...6433; byte-exact sweeps 45/45 + 69/69 GREEN",
+    "tests": 10
   }
 }

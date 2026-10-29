@@ -58,7 +58,7 @@ def parse_quantity(n):
         raise ChainError('Invalid hexadecimal RPC quantity')
     return int(n,16)
 
-USER_AGENT='rootstock-agent-tools/0.9'  # Public RPC endpoints 403 the default Python-urllib UA.
+USER_AGENT='rootstock-agent-tools/0.9.1'  # Public RPC endpoints 403 the default Python-urllib UA.
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs):

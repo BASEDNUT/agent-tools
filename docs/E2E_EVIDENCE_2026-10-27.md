@@ -43,16 +43,21 @@ exists in the toolkit.
 2. **Optional tooling deps declared** (`pyyaml`, `jsonschema`) — the audit scripts
    imported them without declaring them.
 
-## Known data flag (monorepo, not this package)
+## Known data flag (monorepo) — RESOLVED 2026-10-28
 
-The pinned `deployments/base.json` (byte-identical to monorepo HEAD at the time
-of testing) still lists four contracts superseded by the S113-fix owner/oracle
-redeployment as resolvable registry entries: TokenPairRegistry `0xb3D9...AeBd59`,
-CowSwapFeeBurner `0x9614...5147`, ERC4626CowSwapFeeBurner `0xc9E8...90b6`,
-BalancerFeeBurner `0xE6C1...e22d`. The registry is provenance data; resolution
-must not be read as approval. These entries should be marked superseded
-upstream. `registry.verify_contract` against these addresses performs a presence
-check only and must never be used as a basis for interaction.
+The upstream flag is closed. The monorepo registries (commit
+`6206c91643e2e87c43164be90f963c91a11329ab`) now carry the S113-fix redeploys as the
+canonical task entries and an explicit `superseded` never-use map (7 mainnet + 4 Sepolia:
+not just the four flagged burners/registry, but all eleven defective deployments — 3
+mainnet oracle factories had a zero sequencer feed). This package repins to that commit
+and adds a defense-in-depth guard: `KNOWN_SUPERSEDED` (11 hardcoded addresses — a
+registry listing any of them fails to load) plus resolve-time enforcement of the
+registry-declared superseded map. Resolution of a superseded address is now
+structurally impossible, not merely discouraged. Live-verified the same day: new
+contracts live at correct owners (mainnet multisig `0xcc59...3c5a`, Sepolia hot wallet
+`0x6bFB...46a9e`), old contracts still carry upstream owners, new oracle factories read
+`getSequencerUptimeFeed() = 0xBCF85224...6433`, and fresh byte-exact provenance sweeps
+passed 45/45 (mainnet) and 69/69 (Sepolia).
 
 ## Not covered
 
